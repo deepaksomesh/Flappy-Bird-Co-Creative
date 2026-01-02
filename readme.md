@@ -1,3 +1,11 @@
+# Devs:
+## for CC assignment:
+Run : - ```bash pip install transformers torch pygame```
+Then run : ```bash python main.py```
+
+
+
+
 # Procedural Themed Flappy Bird with RL Agents
 
 This repository contains a modular, procedurally generated version of Flappy Bird with multiple themes and reinforcement learning (RL) agent support.
