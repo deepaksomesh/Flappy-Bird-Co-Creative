@@ -1,7 +1,7 @@
 # Devs:
 ## for CC assignment:
-Run : - ```bash pip install transformers torch pygame```
-Then run : ```bash python main.py```
+Run : - ```pip install transformers torch pygame```
+Then run : ```python main.py```
 
 
 
