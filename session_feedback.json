@@ -339,5 +339,319 @@
             "pipe_style": "rock"
         },
         "rating": "good"
+    },
+    {
+        "prompt": "design moving pipes and make the level more harder but weird",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 0.7,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "'Neon Space Hover' is",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.1,
+            "vel": 7.0,
+            "gap_multiplier": 0.7,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "Easier candy mode with wide gaps",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.4,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "candy",
+            "ground_style": "chocolate",
+            "pipe_style": "striped"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "more faster with dynamic obstacles",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "make it faster and fly in a space but weird",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.1,
+            "vel": 7.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "Easier snow mode with wide gaps",
+        "params": {
+            "speed": -5.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "snow",
+            "ground_style": "ice",
+            "pipe_style": "icy"
+        },
+        "rating": "okay"
+    },
+    {
+        "prompt": "Impossible matrix mode with speed",
+        "params": {
+            "speed": -10.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "matrix",
+            "ground_style": "tech",
+            "pipe_style": "neon"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "make the pipes move",
+        "params": {
+            "speed": -10.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "matrix",
+            "ground_style": "tech",
+            "pipe_style": "neon"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "Impossible hell mode with speed",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.8,
+            "vel": 12.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "okay"
+    },
+    {
+        "prompt": "increase the speed like hell",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.8,
+            "vel": 12.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "fly in the moving world",
+        "params": {
+            "speed": -5.0,
+            "gravity": 0.3,
+            "vel": 8.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "snow",
+            "ground_style": "ice",
+            "pipe_style": "icy"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "more faster",
+        "params": {
+            "speed": -11.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "snow",
+            "ground_style": "ice",
+            "pipe_style": "icy"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "stop moving pipes",
+        "params": {
+            "speed": -9.5,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "snow",
+            "ground_style": "ice",
+            "pipe_style": "icy"
+        },
+        "rating": "okay"
+    },
+    {
+        "prompt": "'Neon Space Hover' is",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.1,
+            "vel": 7.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "update the visual to look spooky in the space",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.1,
+            "vel": 7.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "okay"
+    },
+    {
+        "prompt": "make the background with neon lights",
+        "params": {
+            "speed": -10.0,
+            "gravity": 0.3,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "matrix",
+            "ground_style": "tech",
+            "pipe_style": "neon"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "make it faster and fly in a space but harder",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.1,
+            "vel": 7.0,
+            "gap_multiplier": 0.7,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "Easier candy mode with wide gaps",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.4,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "candy",
+            "ground_style": "chocolate",
+            "pipe_style": "striped"
+        },
+        "rating": "okay"
+    },
+    {
+        "prompt": "fly in deep dive style",
+        "params": {
+            "speed": -5.0,
+            "gravity": 0.1,
+            "vel": 7.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "underwater",
+            "ground_style": "sand",
+            "pipe_style": "green"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "more faster",
+        "params": {
+            "speed": -8.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "underwater",
+            "ground_style": "sand",
+            "pipe_style": "green"
+        },
+        "rating": "good"
     }
 ]

@@ -22,6 +22,37 @@ class SemanticBrain:
         except:
             print("Local LLM Not Found. Using Pure Deterministic Mode.")
 
+        self.theme_synonyms = {
+            'space': ['galaxy', 'cosmos', 'star', 'orbit', 'alien', 'planet'],
+            'moon': ['lunar', 'crater', 'grey', 'dust'],
+            'hell': ['lava', 'fire', 'inferno', 'demon', 'doom', 'evil', 'burn', 'red'],
+            'snow': ['ice', 'cold', 'freeze', 'winter', 'chill', 'blizzard', 'white'],
+            'desert': ['sand', 'dune', 'dry', 'hot', 'cactus', 'egypt'],
+            'candy': ['sweet', 'sugar', 'pink', 'chocolate', 'cake', 'cookie'],
+            'matrix': ['tech', 'cyber', 'code', 'hack', 'green', 'digital', 'neo'],
+            'night': ['dark', 'evening', 'midnight', 'sleep'],
+            'day': ['sun', 'bright', 'morning', 'light', 'sky'],
+            'underwater': ['ocean', 'sea', 'fish', 'blue', 'water', 'dive', 'swim', 'bubble', 'deep'],
+            'forest': ['tree', 'wood', 'jungle', 'nature', 'green', 'plant', 'leaf'],
+            'sunset': ['orange', 'dusk', 'evening', 'purple', 'horizon']
+        }
+
+    def _classify_theme_llm(self, text, candidates):
+        """ Ask LLM to pick the best theme from the list """
+        if not self.pipe: return None
+        try:
+            # Zero-Shot Classification Prompt
+            options = ", ".join(candidates)
+            prompt = f"Concept: {text}. Best Match from [{options}]? Answer:"
+            out = self.pipe(prompt, max_new_tokens=5)[0]['generated_text'].lower()
+            
+            # Clean output
+            for c in candidates:
+                if c in out: return c
+        except:
+            pass
+        return None
+
     def analyze(self, prompt, current_params, feedback_history=[]):
         """
         The Master Parser.
@@ -45,31 +76,52 @@ class SemanticBrain:
         print(f" > Detected Semantic Magnitude: {magnitude}x")
 
         # --- 2. DETECT THEME & PRESETS ---
-        # If a theme is mentioned, we APPLY its defaults first, then apply other changes on top.
         styles = {
-            'space':   {'sky': 'space', 'ground': 'tech',  'pipe': 'tech',    'grav': 0.25, 'speed': -6.0},
-            'moon':    {'sky': 'space', 'ground': 'rock',  'pipe': 'rock',    'grav': 0.15, 'speed': -5.0},
-            'hell':    {'sky': 'hell',  'ground': 'lava',  'pipe': 'rock',    'grav': 0.8,  'speed': -9.0},
-            'snow':    {'sky': 'snow',  'ground': 'ice',   'pipe': 'icy',     'grav': 0.5,  'speed': -5.0},
-            'ice':     {'sky': 'snow',  'ground': 'ice',   'pipe': 'icy',     'grav': 0.5,  'speed': -5.0},
-            'desert':  {'sky': 'desert','ground': 'sand',  'pipe': 'cactus',  'grav': 0.6,  'speed': -7.0},
-            'candy':   {'sky': 'candy', 'ground': 'chocolate','pipe': 'striped', 'grav': 0.4, 'speed': -6.0},
-            'matrix':  {'sky': 'matrix','ground': 'tech',  'pipe': 'neon',    'grav': 0.5,  'speed': -10.0},
-            'night':   {'sky': 'night', 'ground': 'grass', 'pipe': 'green',   'grav': 0.5,  'speed': -6.0},
-            'day':     {'sky': 'day',   'ground': 'grass', 'pipe': 'green',   'grav': 0.5,  'speed': -6.0},
+            'space':   {'sky': 'space', 'ground': 'tech',  'pipe': 'tech',    'grav': 0.25, 'speed': -6.0, 'pipe_move_speed': 0.0},
+            'moon':    {'sky': 'space', 'ground': 'rock',  'pipe': 'rock',    'grav': 0.15, 'speed': -5.0, 'pipe_move_speed': 0.0},
+            'hell':    {'sky': 'hell',  'ground': 'lava',  'pipe': 'rock',    'grav': 0.8,  'speed': -9.0, 'pipe_move_speed': 0.0},
+            'snow':    {'sky': 'snow',  'ground': 'ice',   'pipe': 'icy',     'grav': 0.5,  'speed': -5.0, 'pipe_move_speed': 0.0},
+            'ice':     {'sky': 'snow',  'ground': 'ice',   'pipe': 'icy',     'grav': 0.5,  'speed': -5.0, 'pipe_move_speed': 0.0},
+            'desert':  {'sky': 'desert','ground': 'sand',  'pipe': 'cactus',  'grav': 0.6,  'speed': -7.0, 'pipe_move_speed': 0.0},
+            'candy':   {'sky': 'candy', 'ground': 'chocolate','pipe': 'striped', 'grav': 0.4, 'speed': -6.0, 'pipe_move_speed': 0.0},
+            'matrix':  {'sky': 'matrix','ground': 'tech',  'pipe': 'neon',    'grav': 0.5,  'speed': -10.0, 'pipe_move_speed': 0.0},
+            'night':   {'sky': 'night', 'ground': 'grass', 'pipe': 'green',   'grav': 0.5,  'speed': -6.0, 'pipe_move_speed': 0.0},
+            'day':     {'sky': 'day',   'ground': 'grass', 'pipe': 'green',   'grav': 0.5,  'speed': -6.0, 'pipe_move_speed': 0.0},
             
             # [NEW] Themes
-            'underwater': {'sky': 'underwater', 'ground': 'sand', 'pipe': 'green', 'grav': 0.3, 'speed': -5.0},
-            'forest':     {'sky': 'forest',     'ground': 'grass','pipe': 'wood',  'grav': 0.5, 'speed': -6.0},
-            'sunset':     {'sky': 'sunset',     'ground': 'sand', 'pipe': 'rust',  'grav': 0.5, 'speed': -7.0}
+            'underwater': {'sky': 'underwater', 'ground': 'sand', 'pipe': 'green', 'grav': 0.3, 'speed': -5.0, 'pipe_move_speed': 0.0},
+            'forest':     {'sky': 'forest',     'ground': 'grass','pipe': 'wood',  'grav': 0.5, 'speed': -6.0, 'pipe_move_speed': 0.0},
+            'sunset':     {'sky': 'sunset',     'ground': 'sand', 'pipe': 'rust',  'grav': 0.5, 'speed': -7.0, 'pipe_move_speed': 0.0}
         }
         
         found_style = None
-        for s in styles:
-            if s in text:
-                found_style = s
-                break
         
+        # A. Direct & Synonym Match
+        for style_name, preset in styles.items():
+            # Check exact name
+            if style_name in text:
+                found_style = style_name
+                break
+            # Check synonyms
+            if style_name in self.theme_synonyms:
+                for syn in self.theme_synonyms[style_name]:
+                    if syn in text:
+                        found_style = style_name
+                        break
+            if found_style: break
+            
+        # B. LLM Abstract Match (Fallback for novel inputs)
+        if not found_style and self.pipe:
+            # Only if text seems to imply a visual request (contains nouns/adjectives not processed)
+            # Simple heuristic: if text > 3 words and no known theme
+            if len(text.split()) > 2: 
+                print(" > Attempting LLM Theme Classification...")
+                matches = list(styles.keys())
+                llm_guess = self._classify_theme_llm(text, matches)
+                if llm_guess:
+                   print(f" > LLM Predicted Theme: {llm_guess.upper()}")
+                   found_style = llm_guess
+
         if found_style:
             print(f" > Applied Theme Preset: {found_style.upper()}")
             preset = styles[found_style]
@@ -78,14 +130,20 @@ class SemanticBrain:
             p['pipe_style'] = preset.get('pipe', p.get('pipe_style', 'green'))
             p['gravity'] = preset.get('grav', p['gravity'])
             p['speed'] = preset.get('speed', p['speed'])
+            p['pipe_move_speed'] = preset.get('pipe_move_speed', 0.0) # Reset or apply
 
         # --- 3. PHYSICS INTENT PARSING (The Core Semantic Logic) ---
         
         # MOVING PIPES DICTIONARY (New Feature)
         vocab_move = ["moving pipes", "dynamic pipes", "moving obstacles", "pipes move", "motion"]
+        vocab_stop_move = ["static", "stop moving", "no motion", "stable", "fixed pipes", "standard pipes"]
+        
         if any(w in text for w in vocab_move):
             p['pipe_move_speed'] = 1.0 * magnitude
             print(f" > Logic: MOVING PIPES ({p['pipe_move_speed']})")
+        elif any(w in text for w in vocab_stop_move):
+            p['pipe_move_speed'] = 0.0
+            print(f" > Logic: STATIC PIPES (0.0)")
         
         # SPEED DICTIONARIES
         # Semantics: Fast = High Negative Speed (Pygame coord system: moving LEFT)

@@ -139,6 +139,13 @@ class Main:
         
         # --- OVERLAYS ---
         
+        if self.state == STATE_WAITING:
+             self._draw_text("Press SPACE to Start the Game", 50, WIDTH//2, HEIGHT//2, (255, 255, 255))
+             
+        if self.state == STATE_PLAYING:
+             if self.world.last_score > 10:
+                  self._draw_text("You are playing well, try pressing SHIFT and Have fun!!!", 30, WIDTH//2, 100, (255, 255, 0))
+
         if self.state == STATE_GAME_OVER and not self.ai_proposal:
              self.world.game.instructions()
 
