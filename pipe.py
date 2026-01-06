@@ -19,16 +19,16 @@ class Pipe(pygame.sprite.Sprite):
         self.move_speed = move_speed
         self.start_y = pos[1]
         self.move_dir = 1
-        self.move_range = 60 # Pixels to move up/down
+        self.move_range = 60
 
     def get_is_flipped(self):
         return self.is_flipped
 
     def update(self, x_shift):
-        # 1. Horizontal Scroll
+        # Horizontal Scroll
         self.rect.x += x_shift
         
-        # 2. Vertical Movement (if enabled)
+        # Vertical Movement
         if self.move_speed > 0:
             self.rect.y += self.move_speed * self.move_dir
             
@@ -36,7 +36,7 @@ class Pipe(pygame.sprite.Sprite):
             if abs(self.rect.y - self.start_y) > self.move_range:
                 self.move_dir *= -1
         
-        # 3. Cleanup
+        # Cleanup
         if self.rect.right < 0:
             self.kill()
 

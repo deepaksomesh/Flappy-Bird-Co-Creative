@@ -653,5 +653,197 @@
             "pipe_style": "green"
         },
         "rating": "good"
+    },
+    {
+        "prompt": "make the pipes moving",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.25,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "make the pipes moving",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.25,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "make the pipe dynamic",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.25,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "more faster but faster",
+        "params": {
+            "speed": -8.0,
+            "gravity": 0.15,
+            "vel": 7.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "rock",
+            "pipe_style": "rock"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "increase the gravity",
+        "params": {
+            "speed": -5.0,
+            "gravity": 0.35,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "rock",
+            "pipe_style": "rock"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "make the pipes to move",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.25,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "make the pipes move, increase the gravity and speed",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.45,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "Dark hell level style",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.8,
+            "vel": 12.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "make the pipes move",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.25,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "make the pipes moving and increase the gravity",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.25,
+            "vel": 8.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "stop pipes moving",
+        "params": {
+            "speed": -5.0,
+            "gravity": 0.15,
+            "vel": 7.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "rock",
+            "pipe_style": "rock"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "Impossible hell mode with speed but harder",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.8,
+            "vel": 12.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "good"
     }
 ]

@@ -6,7 +6,6 @@ from theme import ThemeManager
 from sound import play as soundPlay
 from game import GameIndicator
 from ui_components import InputBox
-# Layer 2 & 3
 from cocreative import CoCreativeManager
 from creative_state import CreativeState
 
@@ -15,16 +14,13 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT + GROUND_HEIGHT))
 pygame.display.set_caption("Super Flappy Bird Co-Creative")
 theme = ThemeManager()
 
-# ==========================================
-# STATE MACHINE CONSTANTS
-# ==========================================
-STATE_WAITING = "WAITING"         # "Press SPACE"
-STATE_PLAYING = "PLAYING"         # Physics Active
-STATE_GAME_OVER = "GAME_OVER"     # Bird Dead
-STATE_NEGOTIATING = "NEGOTIATING" # AI Suggestion Overlay
-STATE_INPUT = "INPUT"             # User typing
-STATE_FEEDBACK = "FEEDBACK"       # User rating level
-STATE_COUNTDOWN = "COUNTDOWN"     # 3..2..1
+STATE_WAITING = "WAITING"         
+STATE_PLAYING = "PLAYING"         
+STATE_GAME_OVER = "GAME_OVER"     
+STATE_NEGOTIATING = "NEGOTIATING" 
+STATE_INPUT = "INPUT"             
+STATE_FEEDBACK = "FEEDBACK"       
+STATE_COUNTDOWN = "COUNTDOWN"    
 
 
 class Main:
@@ -33,7 +29,6 @@ class Main:
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, 40)
         
-        # Core Components
         self.world = World(screen, theme)
         self.creative_state = CreativeState()
         self.cocreative = CoCreativeManager(theme)
@@ -44,7 +39,7 @@ class Main:
         # State
         self.state = STATE_WAITING
         self.ai_proposal = None
-        self.proposal_handled = False # Ensures we only negotiate once per death
+        self.proposal_handled = False 
         
         # Timers
         self.countdown_val = 3
@@ -52,7 +47,7 @@ class Main:
 
     def main_loop(self):
         while True:
-            dt = self.clock.tick(60) / 1000.0 # Delta time if needed
+            dt = self.clock.tick(60) / 1000.0 
             self.handle_events()
             self.update()
             self.draw()
@@ -63,14 +58,11 @@ class Main:
                 pygame.quit()
                 sys.exit()
 
-            # --- GLOBAL INPUTS ---
             if event.type == pygame.KEYDOWN:
-                # Open Input Box (SHIFT) - Valid in most states except NEGOTIATING/INPUT/FEEDBACK
                 if event.key in (pygame.K_LSHIFT, pygame.K_RSHIFT) and self.state not in (STATE_INPUT, STATE_NEGOTIATING, STATE_FEEDBACK):
                     self._enter_input_mode()
                     continue
 
-            # --- STATE SPECIFIC ---
             if self.state == STATE_INPUT:
                 self._handle_input(event)
             
@@ -92,14 +84,10 @@ class Main:
                     self.world.update("jump")
 
             elif self.state == STATE_GAME_OVER:
-                # Press Space to simple restart if no negotiation
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                      self._restart_game_round()
 
     def update(self):
-        # Physics only update in PLAYING
-        # World.update() handles physics, collision, etc.
-        
         if self.state == STATE_PLAYING:
             self.world.update()
             if self.world.game_over:
@@ -121,12 +109,12 @@ class Main:
         if self.state == STATE_INPUT:
             self.input_box.update()
             
-        # Ground scroll (visuals)
+        # Ground scroll
         self.world._scroll_world() 
 
     def draw(self):
         # Draw World
-        self.screen.fill((0,0,0)) # Clear
+        self.screen.fill((0,0,0))
         
         bg = theme.get('background')
         if bg: self.screen.blit(pygame.transform.scale(bg, (WIDTH, HEIGHT)), (0,0))
@@ -136,8 +124,7 @@ class Main:
         # Draw Ground
         ground = theme.get('ground')
         if ground: self.screen.blit(ground, (self.world.world_shift, HEIGHT))
-        
-        # --- OVERLAYS ---
+    
         
         if self.state == STATE_WAITING:
              self._draw_text("Press SPACE to Start the Game", 50, WIDTH//2, HEIGHT//2, (255, 255, 255))
@@ -166,9 +153,6 @@ class Main:
         
         pygame.display.update()
 
-    # ==========================
-    # LOGIC HELPERS
-    # ==========================
 
     def _on_death(self):
         self.proposal_handled = False
@@ -181,7 +165,7 @@ class Main:
             self._check_for_ai_intervention()
 
     def _restart_game_round(self):
-        """ Resets entities. Preserves Creative State params. """
+        """ We reset entities and preserve Creative State params. """
         self.world.reset_game_logic() 
         self.world.set_physics_params(self.creative_state.current_params) 
         self.state = STATE_WAITING
@@ -194,15 +178,14 @@ class Main:
         score = snapshot['score']
         
         if score >= 0:
-             # PASS FEEDBACK HISTORY TO AI!
              good_examples = self.creative_state.get_good_examples()
              self.ai_proposal = self.cocreative.generate_proposal(score, 0, snapshot, good_examples)
              self.state = STATE_NEGOTIATING
              print(f"Negotiating: {self.ai_proposal}")
 
     def _apply_new_level(self, prompt, params):
-        print("Committing new level...")
-        self.creative_state.activate(params, prompt) # Track prompt
+        print("Applying new level...")
+        self.creative_state.activate(params, prompt)
         self.world.reset_game_logic()
         self.world.set_physics_params(params)
         self.state = STATE_COUNTDOWN
@@ -218,9 +201,6 @@ class Main:
             
             if rating:
                 self.creative_state.register_feedback(rating)
-                # After feedback, we proceed to AI Proposal loop or just Game Over
-                # User says: "Appears as soon as player crashes... AI should save... and [then?]"
-                # Usually we want to negotiate NEXT change.
                 self.state = STATE_GAME_OVER
                 self._check_for_ai_intervention()
 
@@ -232,7 +212,6 @@ class Main:
         self._draw_text("[2] OKAY (Improve it)", 40, WIDTH//2, HEIGHT//2 + 90, (255, 200, 0))
         self._draw_text("[3] BAD (Reject it)", 40, WIDTH//2, HEIGHT//2 + 140, (255, 50, 50))
     
-    # ... (Rest of Input/Negotiation handlers same)
 
     def _handle_input(self, event):
         prompt = self.input_box.handle_event(event)
@@ -241,7 +220,7 @@ class Main:
                 if prompt.strip().lower() == "reset":
                     self.creative_state.reset()
                     self.world.reset_game_logic()
-                    self.world.reset_physics_to_default() # Reset internal defaults
+                    self.world.reset_physics_to_default()
                     self.state = STATE_WAITING
                 else:
                     # Process
@@ -270,13 +249,9 @@ class Main:
                 self.ai_proposal = None
                 
             elif event.key == pygame.K_n:
-                # Reject -> Provide Feedback? 
-                # Req: "User choice Reject -> continue normally"
-                # Req: "Feedback Collected... Only after AI-generated levels"
-                # If we reject, we didn't play it. So no feedback yet?
                 self.state = STATE_GAME_OVER
                 self.ai_proposal = None
-                self.world.game.instructions() # Show score etc
+                self.world.game.instructions()
                 
             elif event.key == pygame.K_m:
                 # Modify

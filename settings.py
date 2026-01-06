@@ -1,17 +1,15 @@
 import pygame
 from os import walk
 
-# ========== Game Screen ==========
 WIDTH, HEIGHT = 900, 650
 GROUND_HEIGHT = 60
 FPS = 120
-HF_TOKEN = "" # Offline Mode Active. Uncomment and add token for Online AI.
 
-# ========== Theme ==========
+# Theme
 DEFAULT_THEME = "day"
 THEMES = ["day", "night", "hell", "space"]
 
-# ========== Pipes ==========
+# Pipes
 PIPE_ROWS = HEIGHT // 10
 PIPE_SIZE = HEIGHT // 10
 PIPE_GAP = (PIPE_SIZE * 2) + (PIPE_SIZE // 2)

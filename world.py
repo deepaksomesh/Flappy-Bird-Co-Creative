@@ -14,7 +14,7 @@ class World:
         self.theme = theme
         self.multi_mode = isMulti
         
-        # Physics Parameters (The Truth)
+        # Physics Parameters
         self.speed = -6.0
         self.gravity = 0.5
         self.vel = 10.0
@@ -41,30 +41,22 @@ class World:
         self.current_pattern_name = 'zigzag'
         self.game_mode = "day"
         self.theme_switch_count = 15
-        
-        # RL / Analysis
-        self.current_reward = 0.0
         self.scored_pipes = set()
         
         # Initialize
         self.reset_game_logic()
 
     def set_physics_params(self, params):
-        """
-        Layer 1 Interface: External forces set these parameters.
-        World blindly obeys them.
-        """
         print(f"World Physics Updated: {params}")
         if 'speed' in params: self.speed = params['speed']
         if 'gravity' in params: self.gravity = params['gravity']
         if 'vel' in params: self.vel = params['vel']
         if 'gap_multiplier' in params: self.gap_multiplier = params['gap_multiplier']
         if 'pipe_move_speed' in params: self.pipe_move_speed = params['pipe_move_speed']
-        # 'dist' in params is optional in new parser but we keep it
         
-        # Also update theme if present
+        
         if 'game_mode' in params:
-             self.game_mode = params['game_mode'] # Just a label fallback
+             self.game_mode = params['game_mode']
 
     def get_params(self):
         return {
@@ -77,8 +69,7 @@ class World:
 
     def reset_game_logic(self):
         """
-        Resets ENTITIES and SCORE.
-        Does NOT reset PHYSICS (Persistence Requirement).
+        Resets entities and score.
         """
         self.upcoming_pipes.empty()
         self.player.empty()
@@ -104,9 +95,6 @@ class World:
         self.game_over_sound = False
     
     def reset_physics_to_default(self):
-        """
-        Explicit reset command.
-        """
         self.speed = -6.0
         self.gravity = 0.5
         self.vel = 10.0
@@ -116,7 +104,6 @@ class World:
         self.theme.set_theme("day")
 
     def update(self, player_event=None):
-        # Input Handling
         if player_event == "jump" and self.player.sprite and not self.game_over:
             self.player.sprite.update(is_jump=True, game_mode=self.game_mode)
         
@@ -147,13 +134,9 @@ class World:
             self.player.sprite.rect.y += self.player.sprite.direction.y
 
     def _scroll_world(self):
-        # If auto-scaling is active (Non-Creative), logic would go here.
-        # But per requirements, we want deterministic control from outside.
-        # So we trust self.speed.
         self.world_shift = self.speed if self.playing and not self.game_over else 0
 
     def _add_pipe(self):
-        # Logic to pick pattern
         if self.pipe_count % 5 == 0:
             self.current_pattern_name = random.choice(list(PIPE_PATTERNS.keys()))
             self.pattern_index = 0
@@ -199,7 +182,6 @@ class World:
         if not bird: return
         
         # Score Logic
-        # Simplistic: check if passed pipes
         for pipe in self.upcoming_pipes:
             if not pipe.get_is_flipped() and pipe not in self.scored_pipes:
                 if bird.rect.centerx > pipe.rect.centerx:

@@ -1,134 +1,90 @@
-# Devs:
-## for CC assignment:
-Run : - ```pip install transformers torch pygame```
-Then run : ```python main.py```
+# COCONUT: Flappy Bird Co-Creative Edition
 
+**Project Title:** COCONUT (Co-creating Co-creativity ‘N’ User Testing)
+**Date:** 2026-01-06
 
+A **Hybrid Neuro-Symbolic Co-Creative Game System** that collaborates with the player to design game levels in real-time. Built on *Flappy Bird*, this system acts as an intelligent design partner, negotiating physics, difficulty, and aesthetics after every gameplay session.
 
+---
 
-# Procedural Themed Flappy Bird with RL Agents
+## 🚀 Key Features
 
-This repository contains a modular, procedurally generated version of Flappy Bird with multiple themes and reinforcement learning (RL) agent support.
+*   **Turn-Based Co-Creation**: Use the "Death" moment as a design intervention. The AI suggests changes; you Negotiate.
+*   **Hybrid Semantic Engine**:
+    *   **Deterministic Physics**: Uses robust **Regex-Based Parsing** for precise control over Speed, Gravity, and Gaps.
+    *   **Creative AI**: Uses **LLM Zero-Shot Classification** (`flan-t5`) to interpret abstract visual concepts (e.g., *"Make it spooky"* -> Hell Theme).
+*   **Procedural Art Generation**: Dynamic asset generation for 12+ themes (Underwater, Matrix, Space, etc.) using parametric algorithms.
+*   **Research Logging**: Automatically captures every user prompt and preference rating for analysis.
 
-## Table of Contents
+---
 
-- [Overview](#overview)
-- [Requirements](#requirements)
-- [Game Structure](#game-structure)
-- [How to Run](#usage)
-  - [1: Manual Play](#manual-play)
-  - [2: Agent Play](#agent-play)
-- [Themes and Procedural Content](#themes-and-pcg)
-- [Project Structure](#project-structure)
-- [Notes](#notes)
+## 🎮 How to Play
 
-## Overview
+### Controls
+*   **SPACE**: Jump / Flap.
+*   **M**: Modify the level (opens chat box during negotiation).
+*   **1 / 2 / 3**: Rate the level (Good / Okay / Bad) after playing.
 
-This project extends the classic Flappy Bird into a flexible simulation environment, integrating:
+### The Loop
+1.  **Play**: Fly as far as you can.
+2.  **Crash**: The game pauses. The AI proposes a change (e.g., *"Try Neon Mode with Low Gravity"*).
+3.  **Negotiate**:
+    *   Press **SPACE** to accept the AI's idea.
+    *   Press **M** to type your own idea (e.g., *"Make it faster with moving pipes"*).
+4.  **Rate**: After the next round, rate the experience to teach the system.
 
-- Procedural content generation (PCG) via predefined pipe patterns
+---
 
-- Dynamic theme transitions ("day", "night", "hell", "space")
+## 🛠️ Installation
 
-- Multi-mode support: manual or RL agent-controlled gameplay
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/yourusername/flappy-bird-cocreative.git
+    cd flappy-bird-cocreative
+    ```
 
-- Reinforcement learning agents including PPO and Double DQN
+2.  **Install Dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *Core Requirements: `pygame`, `numpy`, `transformers`, `torch`.*
 
-- Implemented in Python using the pygame library, this system is designed to evaluate gameplay adaptation across varying difficulty and visual themes.
+3.  **Run the Game**:
+    ```bash
+    python main.py
+    ```
 
-## Requirements
+---
 
-- Python 3.8+
-- [Pygame](https://www.pygame.org)
-- [NumPy](https://numpy.org/)
-- torch
+## 🧠 System Architecture
 
-You can install the required packages via pip:
+The system follows a modular 4-layer architecture designed for research flexibility:
 
-```bash
-pip install -r requirements.txt
-```
+1.  **Game Engine (`world.py`, `pipe.py`)**: 
+    *   Purely reactive physics engine.
+    *   Supports variable gravity, speed, gap size, and **Moving Pipes**.
+2.  **Creative State (`creative_state.py`)**: 
+    *   Manages the "Creative Session". tracks history and persists feedback.
+3.  **Intelligence Layer (`cocreative.py`)**: 
+    *   **SemanticBrain**: The Hybrid Parser (Regex + LLM).
+    *   **GenerativeArt**: The Procedural Renderer.
+4.  **Interaction Layer (`main.py`)**: 
+    *   Finite State Machine managing the `PLAY` <-> `NEGOTIATE` cycle.
 
-## Game Structure
+---
 
-### Manual Play
-```bash
-  python main.py
-```
+## 🧪 Research & Evaluation
 
-Controls:
-- SPACE: Make the bird jump
-- R: Restart the game after death
+This system is designed for the **COCONUT** research project to evaluate:
+*   User engagement with co-creative AI.
+*   The effectiveness of hybrid (Deterministic + Generative) control systems.
 
-### Agent Play
-```bash
-  python agent_plays_game.py --model 1
-```
+Session data is logged to `session_feedback.json` for post-hoc analysis.
 
-Available Agents: (PPO, DDQN, DQN, SAC)
+---
 
-PPO
-```bash
-  --model 1 
-```
+## 📜 Credits
 
-DDQN
-```bash
-  --model 2 
-```
-
-DQN
-```bash
-  --model 3 
-```
-
-SAC
-```bash
-  --model 4 
-```
-
-## Themes and Procedural Content
-
-The game dynamically switches between themes every few pipe intervals:
-
-- Each theme changes background, ground, pipe style, and ambient sound.
-
-- Procedural pipe patterns (zigzag, wave, etc.) are loaded with spacing and difficulty multipliers.
-
-- Customizable via the PIPE_PATTERNS dictionary in settings.py
-
-This PCG system allows testing agent generalization across aesthetic and gameplay variations.
-
-## Project Structure
-```bash
-.
-├── main.py                # Manual play entry point
-├── agent_plays_game.py    # RL agent play script
-├── world.py               # Core game loop and state manager
-├── bird.py                # Bird sprite and behavior
-├── pipe.py                # Pipe sprite and logic
-├── theme.py               # Theme manager class
-├── game.py                # Score/level indicator renderer
-├── settings.py            # Configs, constants, PCG pipe patterns
-├── ppo_agent.py           # PPO agent class
-├── Ddqn_agent.py          # DDQN agent class
-├── memory.py              # Replay buffer
-├── sound.py               # Sound effects
-├── assets/                # Images and sounds by theme
-├── models/                # Saved agents
-└── requirements.txt       # Python dependencies
-```
-
-## Notes
-
-- RL agents are trained per theme for better generalization.
- 
-- The PPO agent uses Categorical policies and requires eval mode for inference.
-
-- Manual and agent play use a shared World class for consistency.
-
-- Agent step() and reset() methods follow RL API conventions.
-
-- PCG and theme switching logic can be tuned in world.py
-
-- Have fun experimenting with Flappy RL in space, hell, and beyond!
+*   **Lead Developer**: [Your Name/User]
+*   **Framework**: Pygame
+*   **AI Model**: Google Flan-T5 (HuggingFace)

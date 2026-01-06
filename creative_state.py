@@ -4,20 +4,17 @@ import os
 
 class CreativeState:
     """
-    Layer 2: Creative State
-    Responsible for:
-    - Remembering AI-designed levels
-    - Tracking current creative parameters
-    - Holding feedback memory (Persisted to JSON)
-    - Knowing whether creative mode is active
+    Creative State:
+    - Remembers AI-designed levels
+    - Tracks current creative parameters
+    - Holds feedback memory (in JSON)
+    - Knows whether creative mode is active or not
     - Session-persistent state
     """
     def __init__(self):
-        # State Machine for Creative Mode
-        # "INACTIVE", "ACTIVE", "ACTIVE_WITH_HISTORY"
         self.mode = "INACTIVE"
         
-        # Default Parameters (The invariants)
+        # Default Parameters
         self.default_params = {
             "speed": -6.0,
             "gravity": 0.5,
@@ -28,21 +25,19 @@ class CreativeState:
             "pipe_move_speed": 0.0
         }
         
-        # Current Parameters (Active)
+        # Current Parameters
         self.current_params = copy.deepcopy(self.default_params)
         
-        # Track the prompt that generated current params
         self.current_prompt = "Default"
         
-        # History of changes (Stack of parameter sets)
+        # History of changes
         self.history = []
         
-        # Feedback Memory (Persisted)
+        # Feedback Memory 
         self.feedback_file = "session_feedback.json"
         self.feedback_memory = self._load_from_disk()
 
     def _load_from_disk(self):
-        """Load persistent feedback history"""
         if os.path.exists(self.feedback_file):
             try:
                 with open(self.feedback_file, 'r') as f:
@@ -55,7 +50,6 @@ class CreativeState:
         return []
 
     def _save_to_disk(self):
-        """Save feedback history for research analysis"""
         try:
             with open(self.feedback_file, 'w') as f:
                 json.dump(self.feedback_memory, f, indent=4)
@@ -77,7 +71,6 @@ class CreativeState:
         print(f"Creative State ACTIVATED: {self.mode}")
 
     def reset(self):
-        """triggered by users typing 'reset'"""
         self.current_params = copy.deepcopy(self.default_params)
         self.current_prompt = "Default"
         self.history.clear()
@@ -85,17 +78,12 @@ class CreativeState:
         print("Creative State RESET to Defaults.")
 
     def _push_history(self):
-        # Limit history size if needed, practically infinite for session
         self.history.append(copy.deepcopy(self.current_params))
 
     def get_params(self):
         return self.current_params
 
     def register_feedback(self, rating):
-        """
-        Store input/output pair with rating for CURRENT params.
-        rating: "good", "okay", "bad"
-        """
         entry = {
             "prompt": self.current_prompt,
             "params": copy.deepcopy(self.current_params),
@@ -106,9 +94,7 @@ class CreativeState:
         print(f"Feedback Registered: {rating.upper()} for '{self.current_prompt}'")
 
     def get_good_examples(self):
-        """ Returns list of prompts rated 'good' """
         return [f"'{x['prompt']}'" for x in self.feedback_memory if x['rating'] == 'good']
 
     def get_bad_params(self):
-        """ Returns list of parameter dicts rated 'bad' """
         return [x['params'] for x in self.feedback_memory if x['rating'] == 'bad']

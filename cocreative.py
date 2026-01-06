@@ -6,21 +6,19 @@ import re
 import torch
 import numpy as np
 
-# ==========================================
-# 1. ROBUST SEMANTIC PARSER (Deterministic + Fuzzy Matching)
-# ==========================================
+# semantic parser
 class SemanticBrain:
     def __init__(self):
         # We process text locally using extensive synonym maps.
-        # This acts as a "Semantic Engine" without the unpredictability of a small LLM.
+        # This acts as a "Semantic Engine" without the unpredictability of an LLM.
         self.pipe = None
         try:
             from transformers import pipeline
-            # Keep LLM mostly for creative names/fallback, not core physics
+            # We keep LLM mostly for creative names/fallback, but not for core physics
             self.pipe = pipeline("text2text-generation", model="google/flan-t5-small", device="cpu") 
-            print("Local LLM Loaded (Auxiliary Mode).")
+            print("Local LLM Loaded...")
         except:
-            print("Local LLM Not Found. Using Pure Deterministic Mode.")
+            print("Local LLM Not Found. Switching to Deterministic Mode...")
 
         self.theme_synonyms = {
             'space': ['galaxy', 'cosmos', 'star', 'orbit', 'alien', 'planet'],
@@ -36,46 +34,84 @@ class SemanticBrain:
             'forest': ['tree', 'wood', 'jungle', 'nature', 'green', 'plant', 'leaf'],
             'sunset': ['orange', 'dusk', 'evening', 'purple', 'horizon']
         }
+        
+        # Regex patterns
+        self.patterns = {}
+        
+        # Magnitude
+        self.patterns['mag_high'] = re.compile(r"\b(val|very|super|insane|ultra|huge|extreme|large|max|lot)\b")
+        self.patterns['mag_low'] = re.compile(r"\b(slightly|little|bit|tad|small|mild|kinda)\b")
+        
+        # Themes
+        self.theme_patterns = {}
+        for theme, synonyms in self.theme_synonyms.items():
+            # This is to match theme name OR any synonym, with word boundaries
+            regex_str = r"\b(" + theme + "|" + "|".join(synonyms) + r")\b"
+            self.theme_patterns[theme] = re.compile(regex_str)
+            
+        # Movement of pipes
+        self.patterns['move_start'] = re.compile(r"\b(moving|dynamic|oscillating|bobbing|shifting|variable|animated|alive)\b")
+        self.patterns['move_stop'] = re.compile(r"\b(static|stop moving|stable|fixed|freeze)\b|no motion")
+        
+        # Speed
+        self.patterns['fast'] = re.compile(r"\b(faster|fast|quick|dash|race|zoom|rapid|sprint|hurry|swift|speed\s*up|high\s*speed)\b")
+        self.patterns['slow'] = re.compile(r"\b(slower|slow|crawl|creep|lethargic|slug|chill|relax|easy|lofi|delay|slow\s*down)\b")
+        
+        # Gravity
+        self.patterns['heavy'] = re.compile(r"\b(heavy|heavier|lead|iron|rock|stone|drop|fall|strong|crush|intense)\b|\b(increase|more|high)\s*grav|\bless\s*float")
+        self.patterns['light'] = re.compile(r"\b(light|lighter|float|feather|balloon|moon|space|drift|soft|glide|fly)\b|\b(decrease|less|low)\s*grav|\bunderwater\b")
+        
+        # Gap size of pipes
+        self.patterns['gap_wide'] = re.compile(r"\b(wider|wide|broad|expand|huge|open|large|spacious)\b|\b(increase|big|more)\s*gap")
+        self.patterns['gap_narrow'] = re.compile(r"\b(narrow|tiny|small|tight|squeeze|hard|close|shut)\b|\b(reduce|decrease|less|small)\s*gap")
 
     def _classify_theme_llm(self, text, candidates):
-        """ Ask LLM to pick the best theme from the list """
+        """ we ask LLM to pick the best theme from the list """
         if not self.pipe: return None
         try:
-            # Zero-Shot Classification Prompt
             options = ", ".join(candidates)
             prompt = f"Concept: {text}. Best Match from [{options}]? Answer:"
             out = self.pipe(prompt, max_new_tokens=5)[0]['generated_text'].lower()
             
-            # Clean output
             for c in candidates:
                 if c in out: return c
         except:
             pass
         return None
 
+    def _classify_movement_llm(self, text):
+        """ we ask LLM if text implies movement """
+        if not self.pipe: return False
+        try:
+            prompt = f"Does the phrase '{text}' imply moving obstacles or dynamic hazards? Answer Yes or No."
+            out = self.pipe(prompt, max_new_tokens=3)[0]['generated_text'].lower()
+            return "yes" in out
+        except:
+            pass
+        return False
+
     def analyze(self, prompt, current_params, feedback_history=[]):
         """
-        The Master Parser.
-        Uses a 'Bag of Words' + 'Modifier' approach to semantically understand request.
+        We use a 'Bag of Words' + 'Modifier' approach to semantically understand request.
         """
         print(f"Analyzing Prompt: '{prompt}'")
         p = current_params.copy()
+        
+        p['pipe_move_speed'] = 0.0 
+        
         text = prompt.lower()
         
-        # --- 1. DETECT MAGNITUDE ---
-        # How intense is the request?
-        magnitude = 1.0 # Default
+        # How intense is the request? (magnitude)
+        magnitude = 1.0
         
-        # High Intensity
-        if any(w in text for w in ["val", "very", "super", "insane", "ultra", "huge", "extreme", "large", "max", "lot"]):
+        if self.patterns['mag_high'].search(text):
             magnitude = 2.0
-        # Low Intensity
-        elif any(w in text for w in ["slightly", "little", "bit", "tad", "small", "mild", "kinda"]):
+        elif self.patterns['mag_low'].search(text):
             magnitude = 0.5
             
-        print(f" > Detected Semantic Magnitude: {magnitude}x")
+        print(f"Detected Semantic Magnitude: {magnitude}x")
 
-        # --- 2. DETECT THEME & PRESETS ---
+        # Theme & Presets
         styles = {
             'space':   {'sky': 'space', 'ground': 'tech',  'pipe': 'tech',    'grav': 0.25, 'speed': -6.0, 'pipe_move_speed': 0.0},
             'moon':    {'sky': 'space', 'ground': 'rock',  'pipe': 'rock',    'grav': 0.15, 'speed': -5.0, 'pipe_move_speed': 0.0},
@@ -87,8 +123,6 @@ class SemanticBrain:
             'matrix':  {'sky': 'matrix','ground': 'tech',  'pipe': 'neon',    'grav': 0.5,  'speed': -10.0, 'pipe_move_speed': 0.0},
             'night':   {'sky': 'night', 'ground': 'grass', 'pipe': 'green',   'grav': 0.5,  'speed': -6.0, 'pipe_move_speed': 0.0},
             'day':     {'sky': 'day',   'ground': 'grass', 'pipe': 'green',   'grav': 0.5,  'speed': -6.0, 'pipe_move_speed': 0.0},
-            
-            # [NEW] Themes
             'underwater': {'sky': 'underwater', 'ground': 'sand', 'pipe': 'green', 'grav': 0.3, 'speed': -5.0, 'pipe_move_speed': 0.0},
             'forest':     {'sky': 'forest',     'ground': 'grass','pipe': 'wood',  'grav': 0.5, 'speed': -6.0, 'pipe_move_speed': 0.0},
             'sunset':     {'sky': 'sunset',     'ground': 'sand', 'pipe': 'rust',  'grav': 0.5, 'speed': -7.0, 'pipe_move_speed': 0.0}
@@ -96,118 +130,82 @@ class SemanticBrain:
         
         found_style = None
         
-        # A. Direct & Synonym Match
-        for style_name, preset in styles.items():
-            # Check exact name
-            if style_name in text:
-                found_style = style_name
+        
+        # Regex Theme Match
+        for theme_name, regex in self.theme_patterns.items():
+            if regex.search(text):
+                found_style = theme_name
                 break
-            # Check synonyms
-            if style_name in self.theme_synonyms:
-                for syn in self.theme_synonyms[style_name]:
-                    if syn in text:
-                        found_style = style_name
-                        break
-            if found_style: break
             
-        # B. LLM Abstract Match (Fallback for novel inputs)
+        # LLM Abstract Match
         if not found_style and self.pipe:
-            # Only if text seems to imply a visual request (contains nouns/adjectives not processed)
-            # Simple heuristic: if text > 3 words and no known theme
             if len(text.split()) > 2: 
-                print(" > Attempting LLM Theme Classification...")
+                print("Attempting LLM Theme Classification...")
                 matches = list(styles.keys())
                 llm_guess = self._classify_theme_llm(text, matches)
                 if llm_guess:
-                   print(f" > LLM Predicted Theme: {llm_guess.upper()}")
+                   print(f"LLM Predicted Theme: {llm_guess.upper()}")
                    found_style = llm_guess
 
         if found_style:
-            print(f" > Applied Theme Preset: {found_style.upper()}")
+            print(f"Applied Theme Preset: {found_style.upper()}")
             preset = styles[found_style]
             p['sky_style'] = preset.get('sky', p.get('sky_style', 'day'))
             p['ground_style'] = preset.get('ground', p.get('ground_style', 'grass'))
             p['pipe_style'] = preset.get('pipe', p.get('pipe_style', 'green'))
             p['gravity'] = preset.get('grav', p['gravity'])
             p['speed'] = preset.get('speed', p['speed'])
-            p['pipe_move_speed'] = preset.get('pipe_move_speed', 0.0) # Reset or apply
+            p['pipe_move_speed'] = preset.get('pipe_move_speed', 0.0)
 
-        # --- 3. PHYSICS INTENT PARSING (The Core Semantic Logic) ---
-        
-        # MOVING PIPES DICTIONARY (New Feature)
-        vocab_move = ["moving pipes", "dynamic pipes", "moving obstacles", "pipes move", "motion"]
-        vocab_stop_move = ["static", "stop moving", "no motion", "stable", "fixed pipes", "standard pipes"]
-        
-        if any(w in text for w in vocab_move):
+        # Physics Intent Parsing (Regex)
+    
+        is_moving = False
+        if self.patterns['move_start'].search(text):
+             is_moving = True
+        elif self.pipe and not self.patterns['move_stop'].search(text):
+             if len(text.split()) > 3:
+                 if self._classify_movement_llm(text):
+                     is_moving = True
+
+        if is_moving:
             p['pipe_move_speed'] = 1.0 * magnitude
-            print(f" > Logic: MOVING PIPES ({p['pipe_move_speed']})")
-        elif any(w in text for w in vocab_stop_move):
+            print(f"Logic: MOVING PIPES ({p['pipe_move_speed']})")
+        elif self.patterns['move_stop'].search(text):
             p['pipe_move_speed'] = 0.0
-            print(f" > Logic: STATIC PIPES (0.0)")
+            print(f"Logic: STATIC PIPES ({p['pipe_move_speed']})")
         
-        # SPEED DICTIONARIES
-        # Semantics: Fast = High Negative Speed (Pygame coord system: moving LEFT)
-        vocab_fast = ["faster", "fast", "quick", "dash", "race", "zoom", "rapid", "sprint", "hurry", "swift", "increase speed", "speed up", "high speed"]
-        vocab_slow = ["slower", "slow", "crawl", "creep", "lethargic", "slug", "chill", "relax", "easy", "lofi", "delay", "decrease speed", "reduce speed", "slow down"]
-        
+        # Speed
         delta_speed = 3.0 * magnitude
-        
-        if any(w in text for w in vocab_fast):
-            # Make speed more negative (faster leftward movement)
-            p['speed'] = max(p['speed'] - delta_speed, -15.0) # Cap at -15
+        if self.patterns['fast'].search(text):
+            p['speed'] = max(p['speed'] - delta_speed, -15.0)
             print(f" > Logic: FASTER ({delta_speed})")
-            
-        elif any(w in text for w in vocab_slow):
-            # Make speed less negative
-            p['speed'] = min(p['speed'] + delta_speed, -2.0) # Cap at -2
+        elif self.patterns['slow'].search(text):
+            p['speed'] = min(p['speed'] + delta_speed, -2.0)
             print(f" > Logic: SLOWER ({delta_speed})")
 
-
-        # GRAVITY DICTIONARIES
-        vocab_heavy = [
-            "heavy", "heavier", "lead", "iron", "rock", "stone", "drop", "fall", "strong", "crush", "intense",
-            "high grav", "increase grav", "more grav", "max grav", 
-            "increase gravity", "more gravity", "increase the gravity",
-            "less floaty", "not floatier", "less float", "anti gravity" 
-        ]
-        vocab_light = [
-            "light", "lighter", "float", "feather", "balloon", "moon", "space", "drift", "soft", "glide", "fly",
-            "low grav", "decrease grav", "less grav", "reduce grav",
-            "decrease gravity", "less gravity", "reduce gravity", "lower gravity",
-            "less heavy", "not heavy", "underwater"
-        ]
-        
+        # Gravity
         delta_grav = 0.2 * magnitude
-        
-        # Check explicit heavy phrases first
-        if any(w in text for w in vocab_heavy):
+        if self.patterns['heavy'].search(text):
             p['gravity'] = min(p['gravity'] + delta_grav, 1.3)
             print(f" > Logic: HEAVIER ({delta_grav})")
-        elif any(w in text for w in vocab_light):
+        elif self.patterns['light'].search(text):
             p['gravity'] = max(p['gravity'] - delta_grav, 0.1)
             print(f" > Logic: LIGHTER ({delta_grav})")
 
-
-        # GAP DICTIONARIES
-        vocab_wide = ["wider", "wide", "broad", "expand", "huge", "open", "large", "spacious", "increase gap", "big gap", "more gap"]
-        vocab_narrow = ["narrow", "tiny", "small", "tight", "squeeze", "hard", "close", "shut", "reduce gap", "decrease gap", "small gap", "less gap"]
-        
+        # Gap
         delta_gap = 0.3 * magnitude
-        
-        if any(w in text for w in vocab_wide):
+        if self.patterns['gap_wide'].search(text):
             p['gap_multiplier'] = min(p['gap_multiplier'] + delta_gap, 2.5)
             print(f" > Logic: WIDER GAP ({delta_gap})")
-        elif any(w in text for w in vocab_narrow):
+        elif self.patterns['gap_narrow'].search(text):
             p['gap_multiplier'] = max(p['gap_multiplier'] - delta_gap, 0.5)
             print(f" > Logic: NARROWER GAP ({delta_gap})")
 
-        # --- 4. DERIVED PHYSICS ---
-        # Adjust velocity (jump strength) based on gravity to ensure playability
         if p['gravity'] < 0.25: p['vel'] = 7.0 
         elif p['gravity'] < 0.4: p['vel'] = 8.0
         elif p['gravity'] > 0.9: p['vel'] = 14.0
         elif p['gravity'] > 0.7: p['vel'] = 12.0
-        else: p['vel'] = 10.0 # Standard
+        else: p['vel'] = 10.0
 
         print(f"Final Params: Spd:{p['speed']:.1f} Grv:{p['gravity']:.1f} Gap:{p['gap_multiplier']:.1f}")
         return p
@@ -217,13 +215,12 @@ class SemanticBrain:
         """ The AI suggests a new level setting """
         if not self.pipe: return "Make it easier"
         
-        # Mad-Libs Style Generator for Robust Variety
+        # Mad-Libs Style Generator 
         adjectives = ["intense", "chill", "crazy", "dark", "neon", "retro", "heavy", "floaty", "fast", "weird"]
         nouns = ["mode", "world", "zone", "dimension", "level", "vibes"]
         actions = ["with wider gaps", "with high gravity", "but faster", "but slower", "with tiny gaps", "style", "with moving pipes"]
         themes = ["space", "hell", "snow", "matrix", "desert", "candy", "night", "underwater", "forest", "sunset"]
         
-        # Generator for fallback
         t = random.choice(themes)
         adj = random.choice(adjectives)
         noun = random.choice(nouns)
@@ -243,7 +240,7 @@ class SemanticBrain:
                 base = random.choice(good_examples).replace('"','').replace("'","")
                 return f"{base} but {random.choice(['faster', 'harder', 'weird'])}"
 
-        # Prompt LLM just for a cool name/idea
+        # Prompting LLM just for a cool name/idea
         try:
             prompt = f"Invent a creative game mode name like 'Neon Space Hover'. Status: Score {score}."
             out = self.pipe(prompt, max_new_tokens=10, do_sample=True, temperature=0.9)[0]['generated_text']
@@ -254,9 +251,6 @@ class SemanticBrain:
         return fallback
 
 
-# ==========================================
-# 2. GENERATIVE ART ENGINE
-# ==========================================
 class GenerativeArt:
     def __init__(self, save_dir):
         self.save_dir = save_dir
@@ -268,7 +262,6 @@ class GenerativeArt:
         self._generate_ground(ground, color)
         self._generate_pipe(pipe, color)
 
-      # --- Component Generators (Simplified for Brevity - Keeping Logic) ---
     def _generate_bg(self, style, color):
         if style == 'space': self._draw_gradient((0,0,20), (10,10,60)); self._add_stars(100)
         elif style == 'hell': self._draw_gradient((60,0,0), (20,0,0)); self._add_mountains((40,0,0))
@@ -276,15 +269,12 @@ class GenerativeArt:
         elif style == 'desert': self._draw_gradient((255,150,50), (255,220,100)); 
         elif style == 'night': self._draw_gradient((0,0,40), (20,20,80)); self._add_stars(50)
         elif style == 'matrix': self._simple_fill((0,0,0)); self._add_matrix_rain()
-        
-        # [NEW] Themes
         elif style == 'underwater': self._draw_gradient((0,50,150), (0,150,200)); self._add_bubbles(40)
         elif style == 'forest': self._draw_gradient((50,150,50), (150,220,150)); self._add_trees(10)
         elif style == 'sunset': self._draw_gradient((100,50,100), (255,150,50)); self._add_sun()
         
         else: self._draw_gradient((100,200,255), (200,230,255)); self._add_clouds(5) # Day
         
-        # Tinting handled in draw or save
         self._save("bg.png", color)
 
     def _generate_ground(self, style, color):
@@ -297,7 +287,7 @@ class GenerativeArt:
 
     def _generate_pipe(self, style, color):
         # Base colors
-        c = (50,200,50) # Green
+        c = (50,200,50)
         if style == 'icy': c = (150,200,255)
         elif style == 'rock': c = (80,80,80)
         elif style == 'rust': c = (120,80,50)
@@ -306,14 +296,13 @@ class GenerativeArt:
         
         self.surface = pygame.Surface((64,384))
         self.surface.fill(c)
-        pygame.draw.rect(self.surface, (0,0,0), (0,0,64,384), 4) # Outline
+        pygame.draw.rect(self.surface, (0,0,0), (0,0,64,384), 4)
         
         if style == 'neon': pygame.draw.rect(self.surface, (255,255,255), (10,0,10,384))
         if style == 'wood': pygame.draw.rect(self.surface, (90,50,20), (15,0,5,384)); pygame.draw.rect(self.surface, (90,50,20), (45,0,5,384)) 
         
         self._save("pipe.png", color, (64,384))
 
-    # --- Construct Helpers ---
     def _draw_gradient(self, c1, c2):
         self.surface = pygame.Surface((512,384))
         for y in range(384):
@@ -348,7 +337,7 @@ class GenerativeArt:
              pygame.draw.circle(self.surface, (255,255,255), (random.randint(0,512), random.randint(50,200)), 20)
 
     def _add_snowbubbles(self, n):
-        self._add_stars(n) # Same visual
+        self._add_stars(n)
         
     def _add_mountains(self, color):
          pygame.draw.polygon(self.surface, color, [(0,384), (100,250), (200,384), (300,200), (512,384)])
@@ -365,9 +354,6 @@ class GenerativeArt:
         pygame.image.save(self.surface, os.path.join(self.save_dir, name))
 
 
-# ==========================================
-# 3. MANAGER
-# ==========================================
 class CoCreativeManager:
     def __init__(self, theme_manager):
         self.theme_manager = theme_manager
@@ -378,7 +364,7 @@ class CoCreativeManager:
 
     def process_prompt(self, text, current_params):
         if not text: return current_params
-        print(f"--- Co-Creating: '{text}' ---")
+        print(f"\nCo-Creating: '{text}'")
         new_params = self.ai_brain.analyze(text, current_params)
         sky = new_params.get('sky_style', 'day')
         ground = new_params.get('ground_style', 'grass')
