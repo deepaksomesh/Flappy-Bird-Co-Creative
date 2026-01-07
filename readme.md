@@ -1,23 +1,21 @@
 # COCONUT: Flappy Bird Co-Creative Edition
 
-**Project Title:** COCONUT (Co-creating Co-creativity ‘N’ User Testing)
-**Version:** 2.0 (Distribution Ready)
+**Project Title:** Wings of Co-Creation: Human-AI Level Design Through Play
 
-> A **Turn-Based Co-Creative Game System** that partners with you to design levels in real-time. Negotiate physics, difficulty, and aesthetics with an advanced AI designer after every run.
+> A **Turn-Based Co-Creative Game System** in Flappy Bird that partners with you to design levels in real-time. It negotiates physics, difficulty, and aesthetics with an AI designer after every run.
 
 ---
 
 ## 🚀 Key Features
 
 *   **Turn-Based Co-Creation**: The "Death" moment is a design intervention. The AI analyzes your play and suggests improvements.
-*   **Advanced AI (Deep Thinking)**:
-    *   **Pure LLM Intelligence**: Powered by **Qwen2.5-1.5B-Instruct** for deep semantic understanding of complex requests (e.g., *"Make it a floaty moon level"*).
-    *   **Asynchronous Processing**: AI runs on a background thread, ensuring the game never freezes even while the LLM is "thinking."
+*   **Advanced AI**:
+    *   **LLM Intelligence**: Uses **Qwen2.5-1.5B-Instruct** for deep semantic understanding of complex requests (e.g., *"Make it a floaty moon level"*).
 *   **Dynamic Visuals & Physics**:
     *   **Procedural Themes**: 12+ styles (Neon, Hell, Matrix, Snow, etc.) generated algorithmically.
-    *   **Variable Physics**: Real-time control over Gravity, Speed, Gap Size, and **Moving Pipes**.
-*   **Research-Grade Logging**:
-    *   **User Feedback**: Rate levels (Good/Bad) to save preferences.
+    *   **Variable Physics**: Real-time control over Gravity, Speed, Gap Size, and Moving Pipes.
+*   **Logging**:
+    *   **User Feedback**: Rate levels (Good/Bad) to save preferences (this was used for evaluation of the game).
     *   **Audit Trails**: Every prompt and AI decision is logged to `session_cocreative_log.json` for analysis.
 
 ---
@@ -44,17 +42,11 @@
 
 ## 🛠️ Installation & Setup
 
-### Option A: Standalone Executable (Recommended for Players)
-No coding knowledge required!
-1.  Navigate to the `dist` folder.
-2.  Run **`FlappyBirdCoCreative.exe`**.
-3.  *Note*: The first launch may take 10-20 seconds to initialize the AI engine.
-
-### Option B: Running from Source (Recommended for Developers)
+### Running from Source
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/flappy-bird-cocreative.git
+    git clone https://github.com/deepaksomesh/flappy-bird-cocreative.git
     cd flappy-bird-cocreative
     ```
 
@@ -63,8 +55,14 @@ No coding knowledge required!
     pip install -r requirements.txt
     ```
     *Key packages: `pygame`, `numpy`, `transformers`, `torch`, `pyinstaller`.*
+    
+    If any issues with pygame installation, use the below to install it separately
+    ```bash
+    python -m pip install pygame
+    pip install numpy transformers torch pyinstaller
+    ```
 
-3.  **Run the Game**:
+4.  **Run the Game**:
     ```bash
     python main.py
     ```
@@ -78,18 +76,21 @@ To generate your own `.exe` file:
 python build_exe.py
 ```
 *   This uses `PyInstaller` to bundle the Python interpreter, dependencies, and assets into a single file.
-*   The output will be in the `dist/` folder.
+*   It generates **`FlappyBirdCoCreative.exe`** in a `\dist` folder (This was then shared across different users to test the game).
+Note*: The first launch of the game may take 10-20 seconds to initialize the AI engine and to start the game.
+
+To avoid all the technical setup, use this link to download the **`FlappyBirdCoCreative.exe`** [Drive Link](https://drive.google.com/file/d/1iYmmdmT6Mdx4QsaMuj8DXjxtgOxGbnIn/view?usp=drive_link)
 
 ---
 
 ## 🧠 System Architecture
 
-The game uses a modern **4-Layer Asynchronous Architecture**:
+High-Level Architecture:
 
 | Layer | Component | Description |
 | :--- | :--- | :--- |
-| **1. UI & State** | `main.py` | Manages the Game Loop and State Machine (`WAITING`, `PLAYING`, `NEGOTIATING`). Handles the new smart input box and overlay rendering. |
-| **2. Engine** | `world.py` | Reactive physics engine. Handles collisions, scoring, and the mathematical logic for **Moving Pipes**. |
+| **1. UI & State** | `main.py` | Manages the Game Loop and State Machine (`WAITING`, `PLAYING`, `NEGOTIATING`). Handles an input box and overlay rendering. |
+| **2. Engine** | `world.py` | Reactive physics engine. Handles collisions, scoring, etc. |
 | **3. Memory** | `creative_state.py` | Persists session history and user feedback to `session_feedback.json`. |
 | **4. Intelligence** | `cocreative.py` | The "Brain". Runs the **Qwen LLM** in a background worker thread to parse natural language and generate level parameters without blocking the main UI thread. |
 
@@ -99,6 +100,14 @@ The game uses a modern **4-Layer Asynchronous Architecture**:
 The system automatically creates two log files next to the executable (or script):
 *   **`session_feedback.json`**: Stores your ratings (Good/Bad) for specific levels.
 *   **`session_cocreative_log.json`**: A detailed technical log of every AI interaction, prompt confidence score, and applied parameter change.
+
+---
+
+## Contributors
+* Deepak Somesh K J
+* Nallathambi V
+* Ekansh
+* Aparajita
 
 ---
 
