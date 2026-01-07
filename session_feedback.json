@@ -845,5 +845,252 @@
             "pipe_style": "rock"
         },
         "rating": "good"
+    },
+    {
+        "prompt": "Wide Pipes Warp",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "stop the moving pipes",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.7,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "Widening Walls",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.7,
+            "vel": 10.0,
+            "gap_multiplier": 1.3,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "make it a lot faster",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.49999999999999994,
+            "vel": 10.0,
+            "gap_multiplier": 1.6,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "Faster Pipes & More Gravity",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.7,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "go like hell",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.7,
+            "vel": 10.0,
+            "gap_multiplier": 0.7,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "take it slow and easy",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.49999999999999994,
+            "vel": 10.0,
+            "gap_multiplier": 0.5,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "hell",
+            "ground_style": "lava",
+            "pipe_style": "rock"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "stop moving pipes and float into the space",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.29999999999999993,
+            "vel": 8.0,
+            "gap_multiplier": 0.5,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "wider pipes and static pipes",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.29999999999999993,
+            "vel": 8.0,
+            "gap_multiplier": 0.8,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "Pipe Paradox",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.29999999999999993,
+            "vel": 8.0,
+            "gap_multiplier": 0.5,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "wider gaps between the pipes",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.29999999999999993,
+            "vel": 8.0,
+            "gap_multiplier": 0.8,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "wider gaps but static pipes",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.29999999999999993,
+            "vel": 8.0,
+            "gap_multiplier": 1.1,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "wider gaps but static pipes",
+        "params": {
+            "speed": -6.0,
+            "gravity": 0.29999999999999993,
+            "vel": 8.0,
+            "gap_multiplier": 1.4000000000000001,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "bad"
+    },
+    {
+        "prompt": "more faster",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.49999999999999994,
+            "vel": 10.0,
+            "gap_multiplier": 1.4000000000000001,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "Widened Pipes Whirlwind",
+        "params": {
+            "speed": -9.0,
+            "gravity": 0.49999999999999994,
+            "vel": 10.0,
+            "gap_multiplier": 1.7000000000000002,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 0.0,
+            "sky_style": "space",
+            "ground_style": "tech",
+            "pipe_style": "tech"
+        },
+        "rating": "good"
+    },
+    {
+        "prompt": "a lot more faster like crazy",
+        "params": {
+            "speed": -15.0,
+            "gravity": 0.5,
+            "vel": 10.0,
+            "gap_multiplier": 1.0,
+            "dist": 4,
+            "game_mode": "day",
+            "pipe_move_speed": 1.0
+        },
+        "rating": "good"
     }
 ]

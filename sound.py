@@ -1,18 +1,20 @@
 # sound.py
 import pygame
 
+from settings import resource_path
+
 pygame.mixer.init()
 
 sounds = {
-    "jump": pygame.mixer.Sound("assets/sounds/jump.wav"),
-    "score": pygame.mixer.Sound("assets/sounds/score.wav"),
-    "hit": pygame.mixer.Sound("assets/sounds/hit.mp3"),
-    "background": pygame.mixer.Sound("assets/sounds/background.mp3"),
-    "night": pygame.mixer.Sound("assets/sounds/night.mp3"),
-    "day": pygame.mixer.Sound("assets/sounds/day.mp3"),
-    "space": pygame.mixer.Sound("assets/sounds/space.mp3"),
-    "hell": pygame.mixer.Sound("assets/sounds/hell.mp3"),
-    "next": pygame.mixer.Sound("assets/sounds/nextlevel.mp3"),
+    "jump": pygame.mixer.Sound(resource_path("assets/sounds/jump.wav")),
+    "score": pygame.mixer.Sound(resource_path("assets/sounds/score.wav")),
+    "hit": pygame.mixer.Sound(resource_path("assets/sounds/hit.mp3")),
+    "background": pygame.mixer.Sound(resource_path("assets/sounds/background.mp3")),
+    "night": pygame.mixer.Sound(resource_path("assets/sounds/night.mp3")),
+    "day": pygame.mixer.Sound(resource_path("assets/sounds/day.mp3")),
+    "space": pygame.mixer.Sound(resource_path("assets/sounds/space.mp3")),
+    "hell": pygame.mixer.Sound(resource_path("assets/sounds/hell.mp3")),
+    "next": pygame.mixer.Sound(resource_path("assets/sounds/nextlevel.mp3")),
 }
 
 def play(sound_name):

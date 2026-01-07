@@ -56,6 +56,22 @@ A **Hybrid Neuro-Symbolic Co-Creative Game System** that collaborates with the p
 
 ---
 
+## 📦 Distribution & Building
+
+To generate a standalone `.exe` for distribution:
+
+1.  **Run the Build Script**:
+    ```bash
+    python build_exe.py
+    ```
+2.  **Locate the Installer**:
+    The executable will be generated at: `dist/FlappyBirdCoCreative.exe`.
+    You can share this single file with anyone (they don't need Python installed).
+    
+    *Note: The first run may take a moment to initialize the AI engine.*
+
+---
+
 ## 🧠 System Architecture
 
 The system follows a modular 4-layer architecture designed for research flexibility:

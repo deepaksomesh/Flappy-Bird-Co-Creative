@@ -1,7 +1,7 @@
 import copy
 import json
 import os
-
+import sys
 class CreativeState:
     """
     Creative State:
@@ -34,7 +34,15 @@ class CreativeState:
         self.history = []
         
         # Feedback Memory 
-        self.feedback_file = "session_feedback.json"
+        # For EXE: Save to the same folder as the EXE (User Request)
+        if getattr(sys, 'frozen', False):
+            # If running as compiled EXE, use the EXE's directory
+            base_dir = os.path.dirname(sys.executable)
+        else:
+            # If running as script, use current directory
+            base_dir = os.path.abspath(".")
+            
+        self.feedback_file = os.path.join(base_dir, "session_feedback.json")
         self.feedback_memory = self._load_from_disk()
 
     def _load_from_disk(self):

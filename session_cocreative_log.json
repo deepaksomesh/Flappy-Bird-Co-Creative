@@ -1,0 +1,605 @@
+[
+  {
+    "level_id": "03f62eb9-94ea-4c31-a76f-e3f20b97ba93",
+    "ts": "2026-01-07T17:40:02.622625Z",
+    "source": "unknown",
+    "prompt": "Faster Pipes & More Gravity",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "faster",
+      "gravity": "heavier",
+      "gap": "unchanged",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "params_after": {
+      "speed": -9.0,
+      "gravity": 0.7,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:40:08.507674Z"
+  },
+  {
+    "level_id": "9a3f27d8-1f51-47a0-9dba-5a5268a4d277",
+    "ts": "2026-01-07T17:42:10.248590Z",
+    "source": "unknown",
+    "prompt": "go like hell",
+    "intent": {
+      "movement": "enable",
+      "speed": "faster",
+      "gravity": "heavier",
+      "gap": "narrower",
+      "theme": "hell",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "params_after": {
+      "speed": -9.0,
+      "gravity": 0.7,
+      "vel": 10.0,
+      "gap_multiplier": 0.7,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "hell",
+      "ground_style": "lava",
+      "pipe_style": "rock"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:42:16.861171Z"
+  },
+  {
+    "level_id": "1df20c53-f6aa-467e-b782-6163d36eae00",
+    "ts": "2026-01-07T17:42:47.856321Z",
+    "source": "unknown",
+    "prompt": "take it slow and easy",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "slower",
+      "gravity": "lighter",
+      "gap": "narrower",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -9.0,
+      "gravity": 0.7,
+      "vel": 10.0,
+      "gap_multiplier": 0.7,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "hell",
+      "ground_style": "lava",
+      "pipe_style": "rock"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 0.5,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "hell",
+      "ground_style": "lava",
+      "pipe_style": "rock"
+    },
+    "rating": "bad",
+    "rating_ts": "2026-01-07T17:42:56.181867Z"
+  },
+  {
+    "level_id": "d1329aeb-5cc7-4687-a5ef-da578c73fdc4",
+    "ts": "2026-01-07T17:43:25.209055Z",
+    "source": "unknown",
+    "prompt": "stop moving pipes and float into the space",
+    "intent": {
+      "movement": "disable",
+      "speed": "unchanged",
+      "gravity": "lighter",
+      "gap": "unchanged",
+      "theme": "space",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 0.5,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "hell",
+      "ground_style": "lava",
+      "pipe_style": "rock"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.5,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:43:36.645704Z"
+  },
+  {
+    "level_id": "34577c2d-c649-46d9-a9a0-4922a3a1f7a3",
+    "ts": "2026-01-07T17:44:02.171934Z",
+    "source": "unknown",
+    "prompt": "wider pipes and static pipes",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "unchanged",
+      "gravity": "unchanged",
+      "gap": "wider",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.5,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.8,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "bad",
+    "rating_ts": "2026-01-07T17:44:11.167344Z"
+  },
+  {
+    "level_id": "60e140c6-816f-404d-bac8-821c2aa083ae",
+    "ts": "2026-01-07T17:44:31.246806Z",
+    "source": "unknown",
+    "prompt": "Pipe Paradox",
+    "intent": {
+      "movement": "enable",
+      "speed": "unchanged",
+      "gravity": "unchanged",
+      "gap": "narrower",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.8,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.5,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:44:39.595448Z"
+  },
+  {
+    "level_id": "943ffb12-767f-4bc4-b9a5-00b39770eedf",
+    "ts": "2026-01-07T17:44:58.223543Z",
+    "source": "unknown",
+    "prompt": "wider gaps between the pipes",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "unchanged",
+      "gravity": "unchanged",
+      "gap": "wider",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.5,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.8,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:45:07.366778Z"
+  },
+  {
+    "level_id": "846e24e0-c4b2-4862-9f4a-51a59306d40c",
+    "ts": "2026-01-07T17:45:32.381172Z",
+    "source": "unknown",
+    "prompt": "wider gaps but static pipes",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "unchanged",
+      "gravity": "unchanged",
+      "gap": "wider",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 0.8,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 1.1,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:45:39.501227Z"
+  },
+  {
+    "level_id": "84e7b7b7-18e7-4e99-83de-4e75b1c14007",
+    "ts": "2026-01-07T17:46:08.511885Z",
+    "source": "unknown",
+    "prompt": "wider gaps but static pipes",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "unchanged",
+      "gravity": "unchanged",
+      "gap": "wider",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 1.1,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 1.4000000000000001,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "bad",
+    "rating_ts": "2026-01-07T17:46:17.235410Z"
+  },
+  {
+    "level_id": "aa6af937-5064-4c58-9ecf-c9039b0292d5",
+    "ts": "2026-01-07T17:46:45.719235Z",
+    "source": "unknown",
+    "prompt": "dont move pipes and increase the gravity",
+    "intent": {
+      "movement": "disable",
+      "speed": "unchanged",
+      "gravity": "heavier",
+      "gap": "unchanged",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.29999999999999993,
+      "vel": 8.0,
+      "gap_multiplier": 1.4000000000000001,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -6.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 1.4000000000000001,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": null,
+    "rating_ts": null
+  },
+  {
+    "level_id": "9162d254-eca8-465a-a303-b2227d5f8bf0",
+    "ts": "2026-01-07T17:47:17.178322Z",
+    "source": "unknown",
+    "prompt": "more faster",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "faster",
+      "gravity": "unchanged",
+      "gap": "unchanged",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 1.4000000000000001,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -9.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 1.4000000000000001,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:47:27.952948Z"
+  },
+  {
+    "level_id": "0e23d9ac-a2fe-4f85-a899-48ff17c8a6db",
+    "ts": "2026-01-07T17:47:48.818250Z",
+    "source": "unknown",
+    "prompt": "Widened Pipes Whirlwind",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "unchanged",
+      "gravity": "unchanged",
+      "gap": "wider",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -9.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 1.4000000000000001,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "params_after": {
+      "speed": -9.0,
+      "gravity": 0.49999999999999994,
+      "vel": 10.0,
+      "gap_multiplier": 1.7000000000000002,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0,
+      "sky_style": "space",
+      "ground_style": "tech",
+      "pipe_style": "tech"
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:48:19.885886Z"
+  },
+  {
+    "level_id": "343427d8-3139-46e2-988c-a8569bb2b557",
+    "ts": "2026-01-07T17:56:02.555126Z",
+    "source": "unknown",
+    "prompt": "make it a lot faster",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "faster",
+      "gravity": "unchanged",
+      "gap": "unchanged",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -6.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "params_after": {
+      "speed": -9.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "rating": null,
+    "rating_ts": null
+  },
+  {
+    "level_id": "6101e496-3b6d-42f5-95ef-1c426a385e69",
+    "ts": "2026-01-07T17:56:18.728070Z",
+    "source": "unknown",
+    "prompt": "more faster",
+    "intent": {
+      "movement": "unchanged",
+      "speed": "faster",
+      "gravity": "unchanged",
+      "gap": "unchanged",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -9.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "params_after": {
+      "speed": -12.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "rating": null,
+    "rating_ts": null
+  },
+  {
+    "level_id": "dcd6e126-d24d-4693-b298-afcdc68b49e8",
+    "ts": "2026-01-07T17:56:39.469793Z",
+    "source": "unknown",
+    "prompt": "a lot more faster like crazy",
+    "intent": {
+      "movement": "enable",
+      "speed": "faster",
+      "gravity": "unchanged",
+      "gap": "unchanged",
+      "theme": "none",
+      "confidence": 0.95
+    },
+    "confidence": 0.95,
+    "applied": true,
+    "params_before": {
+      "speed": -12.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 0.0
+    },
+    "params_after": {
+      "speed": -15.0,
+      "gravity": 0.5,
+      "vel": 10.0,
+      "gap_multiplier": 1.0,
+      "dist": 4,
+      "game_mode": "day",
+      "pipe_move_speed": 1.0
+    },
+    "rating": "good",
+    "rating_ts": "2026-01-07T17:56:46.972502Z"
+  }
+]

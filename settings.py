@@ -1,5 +1,18 @@
 import pygame
+import sys
+import os
 from os import walk
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 
 WIDTH, HEIGHT = 900, 650
 GROUND_HEIGHT = 60
@@ -36,11 +49,14 @@ PIPE_PATTERNS = {
 }
 
 def import_sprite(path):
-  print('path', path)
+  # Ensure path is absolute for PyInstaller
+  abs_path = resource_path(path)
+  # print('loading sprites from:', abs_path)
+  
   surface_list = []
-  for _, __, image_files in walk(path):
+  for _, __, image_files in walk(abs_path):
     for image in sorted(image_files): 
-      full_path = f"{path}/{image}"
+      full_path = os.path.join(abs_path, image)
       img_surface = pygame.image.load(full_path).convert_alpha()
       surface_list.append(img_surface)
   return surface_list

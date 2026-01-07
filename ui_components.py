@@ -7,7 +7,9 @@ class InputBox:
         self.color_active = pygame.Color('dodgerblue2')
         self.color = self.color_inactive
         self.text = text
-        self.txt_surface = pygame.font.Font(None, 32).render(text, True, self.color)
+        self.placeholder = "Design your next level"
+        self.font = pygame.font.Font(None, 32)
+        self.txt_surface = self.font.render(text, True, self.color)
         self.active = False
         self.done = False
 
@@ -30,24 +32,62 @@ class InputBox:
                     return None
                 else:
                     self.text += event.unicode
-                self.txt_surface = pygame.font.Font(None, 32).render(self.text, True, self.color)
         return None
 
     def update(self):
-        width = max(200, self.txt_surface.get_width()+10)
-        self.rect.w = width
+        # Auto-resize width if needed (optional, but wrapping handles height better)
+        pass
 
     def draw(self, screen):
-        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        # Fill background so text is readable over game
+        pygame.draw.rect(screen, (0, 0, 0), self.rect)
+        
+        # Wrapping logic
+        max_width = self.rect.width - 20 # Padding
+        words = self.text.split(' ') if self.text else self.placeholder.split(' ')
+        lines = []
+        current_line = []
+        
+        # Color: standard if text exists, grey if placeholder
+        text_color = self.color if self.text else pygame.Color('gray50')
+        
+        for word in words:
+            # Check if adding word exceeds max_width
+            test_line = ' '.join(current_line + [word])
+            fw, fh = self.font.size(test_line)
+            
+            if fw < max_width:
+                current_line.append(word)
+            else:
+                if current_line:
+                    lines.append(' '.join(current_line))
+                    current_line = [word]
+                else:
+                    # Single word is too long, force split it
+                    lines.append(word)
+                    current_line = []
+                    
+        if current_line:
+            lines.append(' '.join(current_line))
+        
+        y_offset = self.rect.y + 5
+        for line in lines:
+            line_surf = self.font.render(line, True, text_color)
+            # Center the text
+            text_rect = line_surf.get_rect(center=(self.rect.centerx, y_offset + 10))
+            screen.blit(line_surf, text_rect)
+            y_offset += 25  # Line height
+            
+        # Draw box border
+        # Adjust height to fit text (expand down)
+        self.rect.h = max(32, y_offset - self.rect.y + 10)
         pygame.draw.rect(screen, self.color, self.rect, 2)
 
     def reset(self):
         self.text = ''
-        self.txt_surface = pygame.font.Font(None, 32).render(self.text, True, self.color)
         self.active = True
         self.done = False
 
     def set_text(self, text):
         self.text = text
-        self.txt_surface = pygame.font.Font(None, 32).render(self.text, True, self.color)
         self.update()
