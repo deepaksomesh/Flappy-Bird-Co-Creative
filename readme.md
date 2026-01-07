@@ -55,8 +55,14 @@
     pip install -r requirements.txt
     ```
     *Key packages: `pygame`, `numpy`, `transformers`, `torch`, `pyinstaller`.*
+    
+    If any issues with pygame installation, use the below to install it separately
+    ```bash
+    python -m pip install pygame
+    pip install numpy transformers torch pyinstaller
+    ```
 
-3.  **Run the Game**:
+4.  **Run the Game**:
     ```bash
     python main.py
     ```
