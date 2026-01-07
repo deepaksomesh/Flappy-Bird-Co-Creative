@@ -2,7 +2,7 @@
 
 **Project Title:** Wings of Co-Creation: Human-AI Level Design Through Play
 
-> A **Turn-Based Co-Creative Game System** that partners with you to design levels in real-time. It negotiates physics, difficulty, and aesthetics with an AI designer after every run.
+> A **Turn-Based Co-Creative Game System** in Flappy Bird that partners with you to design levels in real-time. It negotiates physics, difficulty, and aesthetics with an AI designer after every run.
 
 ---
 
@@ -11,7 +11,6 @@
 *   **Turn-Based Co-Creation**: The "Death" moment is a design intervention. The AI analyzes your play and suggests improvements.
 *   **Advanced AI**:
     *   **LLM Intelligence**: Uses **Qwen2.5-1.5B-Instruct** for deep semantic understanding of complex requests (e.g., *"Make it a floaty moon level"*).
-    *   **Asynchronous Processing**: AI runs on a background thread, ensuring the game never freezes even while the LLM is "thinking."
 *   **Dynamic Visuals & Physics**:
     *   **Procedural Themes**: 12+ styles (Neon, Hell, Matrix, Snow, etc.) generated algorithmically.
     *   **Variable Physics**: Real-time control over Gravity, Speed, Gap Size, and Moving Pipes.
@@ -47,7 +46,7 @@
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/flappy-bird-cocreative.git
+    git clone [https://github.com/yourusername/flappy-bird-cocreative.git](https://github.com/deepaksomesh/Flappy-Bird-Co-Creative.git)
     cd flappy-bird-cocreative
     ```
 
@@ -98,7 +97,17 @@ The system automatically creates two log files next to the executable (or script
 
 ---
 
+## Contributors
+* Deepak Somesh K J
+* Nallathambi V
+* Ekansh
+* Aparajita
+
+---
+
 ## 📜 Credits
 *   **Framework**: Pygame
 *   **AI Model**: Qwen2.5-1.5B-Instruct (Alibaba Cloud)
 *   **Original Game**: Flappy Bird (Dong Nguyen)
+
+
