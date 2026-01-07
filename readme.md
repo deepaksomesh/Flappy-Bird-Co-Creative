@@ -46,7 +46,7 @@
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/flappy-bird-cocreative.git
+    git clone https://github.com/deepaksomesh/flappy-bird-cocreative.git
     cd flappy-bird-cocreative
     ```
 
