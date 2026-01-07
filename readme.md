@@ -1,20 +1,24 @@
 # COCONUT: Flappy Bird Co-Creative Edition
 
 **Project Title:** COCONUT (Co-creating Co-creativity ‘N’ User Testing)
-**Date:** 2026-01-06
+**Version:** 2.0 (Distribution Ready)
 
-A **Hybrid Neuro-Symbolic Co-Creative Game System** that collaborates with the player to design game levels in real-time. Built on *Flappy Bird*, this system acts as an intelligent design partner, negotiating physics, difficulty, and aesthetics after every gameplay session.
+> A **Turn-Based Co-Creative Game System** that partners with you to design levels in real-time. Negotiate physics, difficulty, and aesthetics with an advanced AI designer after every run.
 
 ---
 
 ## 🚀 Key Features
 
-*   **Turn-Based Co-Creation**: Use the "Death" moment as a design intervention. The AI suggests changes; you Negotiate.
-*   **Hybrid Semantic Engine**:
-    *   **Deterministic Physics**: Uses robust **Regex-Based Parsing** for precise control over Speed, Gravity, and Gaps.
-    *   **Creative AI**: Uses **LLM Zero-Shot Classification** (`flan-t5`) to interpret abstract visual concepts (e.g., *"Make it spooky"* -> Hell Theme).
-*   **Procedural Art Generation**: Dynamic asset generation for 12+ themes (Underwater, Matrix, Space, etc.) using parametric algorithms.
-*   **Research Logging**: Automatically captures every user prompt and preference rating for analysis.
+*   **Turn-Based Co-Creation**: The "Death" moment is a design intervention. The AI analyzes your play and suggests improvements.
+*   **Advanced AI (Deep Thinking)**:
+    *   **Pure LLM Intelligence**: Powered by **Qwen2.5-1.5B-Instruct** for deep semantic understanding of complex requests (e.g., *"Make it a floaty moon level"*).
+    *   **Asynchronous Processing**: AI runs on a background thread, ensuring the game never freezes even while the LLM is "thinking."
+*   **Dynamic Visuals & Physics**:
+    *   **Procedural Themes**: 12+ styles (Neon, Hell, Matrix, Snow, etc.) generated algorithmically.
+    *   **Variable Physics**: Real-time control over Gravity, Speed, Gap Size, and **Moving Pipes**.
+*   **Research-Grade Logging**:
+    *   **User Feedback**: Rate levels (Good/Bad) to save preferences.
+    *   **Audit Trails**: Every prompt and AI decision is logged to `session_cocreative_log.json` for analysis.
 
 ---
 
@@ -22,20 +26,31 @@ A **Hybrid Neuro-Symbolic Co-Creative Game System** that collaborates with the p
 
 ### Controls
 *   **SPACE**: Jump / Flap.
-*   **M**: Modify the level (opens chat box during negotiation).
-*   **1 / 2 / 3**: Rate the level (Good / Okay / Bad) after playing.
+*   **SHIFT**: Open the Design Chat (anytime).
+*   **M**: Modify the AI's proposal during negotiation.
+*   **1 / 2 / 3**: Rate the level (Good / Okay / Bad) after dying.
 
 ### The Loop
 1.  **Play**: Fly as far as you can.
-2.  **Crash**: The game pauses. The AI proposes a change (e.g., *"Try Neon Mode with Low Gravity"*).
-3.  **Negotiate**:
-    *   Press **SPACE** to accept the AI's idea.
-    *   Press **M** to type your own idea (e.g., *"Make it faster with moving pipes"*).
-4.  **Rate**: After the next round, rate the experience to teach the system.
+2.  **Crash**: The game pauses. The AI analyzes your score.
+3.  **Proposal**: The AI suggests a change (e.g., *"You're doing great! Try 'Abyssal Void' mode with moving pipes"*).
+4.  **Negotiate**:
+    *   Press **Y** to accept.
+    *   Press **N** to reject.
+    *   Press **M** to modify (e.g., *"Make it faster instead"*).
+5.  **Rate**: Teach the system what is fun by rating the level after playing it.
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Installation & Setup
+
+### Option A: Standalone Executable (Recommended for Players)
+No coding knowledge required!
+1.  Navigate to the `dist` folder.
+2.  Run **`FlappyBirdCoCreative.exe`**.
+3.  *Note*: The first launch may take 10-20 seconds to initialize the AI engine.
+
+### Option B: Running from Source (Recommended for Developers)
 
 1.  **Clone the Repository**:
     ```bash
@@ -47,7 +62,7 @@ A **Hybrid Neuro-Symbolic Co-Creative Game System** that collaborates with the p
     ```bash
     pip install -r requirements.txt
     ```
-    *Core Requirements: `pygame`, `numpy`, `transformers`, `torch`.*
+    *Key packages: `pygame`, `numpy`, `transformers`, `torch`, `pyinstaller`.*
 
 3.  **Run the Game**:
     ```bash
@@ -56,51 +71,38 @@ A **Hybrid Neuro-Symbolic Co-Creative Game System** that collaborates with the p
 
 ---
 
-## 📦 Distribution & Building
+## 📦 Building form Source
+To generate your own `.exe` file:
 
-To generate a standalone `.exe` for distribution:
-
-1.  **Run the Build Script**:
-    ```bash
-    python build_exe.py
-    ```
-2.  **Locate the Installer**:
-    The executable will be generated at: `dist/FlappyBirdCoCreative.exe`.
-    You can share this single file with anyone (they don't need Python installed).
-    
-    *Note: The first run may take a moment to initialize the AI engine.*
+```bash
+python build_exe.py
+```
+*   This uses `PyInstaller` to bundle the Python interpreter, dependencies, and assets into a single file.
+*   The output will be in the `dist/` folder.
 
 ---
 
 ## 🧠 System Architecture
 
-The system follows a modular 4-layer architecture designed for research flexibility:
+The game uses a modern **4-Layer Asynchronous Architecture**:
 
-1.  **Game Engine (`world.py`, `pipe.py`)**: 
-    *   Purely reactive physics engine.
-    *   Supports variable gravity, speed, gap size, and **Moving Pipes**.
-2.  **Creative State (`creative_state.py`)**: 
-    *   Manages the "Creative Session". tracks history and persists feedback.
-3.  **Intelligence Layer (`cocreative.py`)**: 
-    *   **SemanticBrain**: The Hybrid Parser (Regex + LLM).
-    *   **GenerativeArt**: The Procedural Renderer.
-4.  **Interaction Layer (`main.py`)**: 
-    *   Finite State Machine managing the `PLAY` <-> `NEGOTIATE` cycle.
+| Layer | Component | Description |
+| :--- | :--- | :--- |
+| **1. UI & State** | `main.py` | Manages the Game Loop and State Machine (`WAITING`, `PLAYING`, `NEGOTIATING`). Handles the new smart input box and overlay rendering. |
+| **2. Engine** | `world.py` | Reactive physics engine. Handles collisions, scoring, and the mathematical logic for **Moving Pipes**. |
+| **3. Memory** | `creative_state.py` | Persists session history and user feedback to `session_feedback.json`. |
+| **4. Intelligence** | `cocreative.py` | The "Brain". Runs the **Qwen LLM** in a background worker thread to parse natural language and generate level parameters without blocking the main UI thread. |
 
 ---
 
-## 🧪 Research & Evaluation
-
-This system is designed for the **COCONUT** research project to evaluate:
-*   User engagement with co-creative AI.
-*   The effectiveness of hybrid (Deterministic + Generative) control systems.
-
-Session data is logged to `session_feedback.json` for post-hoc analysis.
+## 📝 Logging & Data
+The system automatically creates two log files next to the executable (or script):
+*   **`session_feedback.json`**: Stores your ratings (Good/Bad) for specific levels.
+*   **`session_cocreative_log.json`**: A detailed technical log of every AI interaction, prompt confidence score, and applied parameter change.
 
 ---
 
 ## 📜 Credits
-
-*   **Lead Developer**: [Your Name/User]
 *   **Framework**: Pygame
-*   **AI Model**: Google Flan-T5 (HuggingFace)
+*   **AI Model**: Qwen2.5-1.5B-Instruct (Alibaba Cloud)
+*   **Original Game**: Flappy Bird (Dong Nguyen)
