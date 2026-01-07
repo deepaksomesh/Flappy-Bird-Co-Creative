@@ -80,12 +80,12 @@ To avoid all the technical setup, use this link to download the **`FlappyBirdCoC
 
 ## 🧠 System Architecture
 
-The game uses a modern **4-Layer Asynchronous Architecture**:
+High-Level Architecture:
 
 | Layer | Component | Description |
 | :--- | :--- | :--- |
-| **1. UI & State** | `main.py` | Manages the Game Loop and State Machine (`WAITING`, `PLAYING`, `NEGOTIATING`). Handles the new smart input box and overlay rendering. |
-| **2. Engine** | `world.py` | Reactive physics engine. Handles collisions, scoring, and the mathematical logic for **Moving Pipes**. |
+| **1. UI & State** | `main.py` | Manages the Game Loop and State Machine (`WAITING`, `PLAYING`, `NEGOTIATING`). Handles an input box and overlay rendering. |
+| **2. Engine** | `world.py` | Reactive physics engine. Handles collisions, scoring, etc. |
 | **3. Memory** | `creative_state.py` | Persists session history and user feedback to `session_feedback.json`. |
 | **4. Intelligence** | `cocreative.py` | The "Brain". Runs the **Qwen LLM** in a background worker thread to parse natural language and generate level parameters without blocking the main UI thread. |
 
