@@ -105,8 +105,8 @@ The system automatically creates two log files next to the executable (or script
 
 ## Contributors
 * Deepak Somesh K J
-* Nallathambi V
-* Ekansh
+* Nallathambi Vethiappan
+* Ekansh Khanulia
 * Aparajita
 
 ---
