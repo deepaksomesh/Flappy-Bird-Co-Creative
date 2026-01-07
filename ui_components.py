@@ -35,24 +35,19 @@ class InputBox:
         return None
 
     def update(self):
-        # Auto-resize width if needed (optional, but wrapping handles height better)
         pass
 
     def draw(self, screen):
-        # Fill background so text is readable over game
         pygame.draw.rect(screen, (0, 0, 0), self.rect)
         
-        # Wrapping logic
         max_width = self.rect.width - 20 # Padding
         words = self.text.split(' ') if self.text else self.placeholder.split(' ')
         lines = []
         current_line = []
         
-        # Color: standard if text exists, grey if placeholder
         text_color = self.color if self.text else pygame.Color('gray50')
         
         for word in words:
-            # Check if adding word exceeds max_width
             test_line = ' '.join(current_line + [word])
             fw, fh = self.font.size(test_line)
             
@@ -63,7 +58,6 @@ class InputBox:
                     lines.append(' '.join(current_line))
                     current_line = [word]
                 else:
-                    # Single word is too long, force split it
                     lines.append(word)
                     current_line = []
                     
@@ -73,13 +67,10 @@ class InputBox:
         y_offset = self.rect.y + 5
         for line in lines:
             line_surf = self.font.render(line, True, text_color)
-            # Center the text
             text_rect = line_surf.get_rect(center=(self.rect.centerx, y_offset + 10))
             screen.blit(line_surf, text_rect)
-            y_offset += 25  # Line height
+            y_offset += 25 
             
-        # Draw box border
-        # Adjust height to fit text (expand down)
         self.rect.h = max(32, y_offset - self.rect.y + 10)
         pygame.draw.rect(screen, self.color, self.rect, 2)
 
